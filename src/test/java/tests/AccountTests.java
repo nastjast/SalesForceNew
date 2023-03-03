@@ -1,5 +1,6 @@
 package tests;
 
+import objects.Account;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -19,16 +20,18 @@ public class AccountTests extends BaseTest {
 
     @Test
     public void createAccountAndCompareNameTest() {
+        Account account = new Account(accountName, "tut.by", "Description", "Analyst");
         newAccountPage.openAccountModalPage()
-                .createAccount(accountName, "hello.com", "Description")
+                .createAccount(account)
                 .clickActionButton("Speichern");
-        Assert.assertEquals(accountViewPage.getCreatedAccountName(), accountName);
+        Assert.assertEquals(accountViewPage.getCreatedAccountName(), account.getAccountName());
     }
 
     @Test
     public void cancelAccountCreation() throws InterruptedException {
+        Account account = new Account(accountName, "tut.by", "Description", "Analyst");
         newAccountPage.openAccountModalPage()
-                .createAccount(accountName, "hello.com", "Description")
+                .createAccount(account)
                 .clickActionButton("Abbrechen");
         Assert.assertTrue(newAccountPage.isModalWindowDisplayed());
     }
